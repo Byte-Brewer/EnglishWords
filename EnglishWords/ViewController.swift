@@ -13,6 +13,8 @@ let orangeButtonStart = "orangeButtonStart"
 let blueButtonLock = "blueButtonLock"
 let blueButtonSelect = "blueButtonSelect"
 
+let castomLayer = "one"
+
 class ViewController: UIViewController {
     
     
@@ -34,6 +36,7 @@ class ViewController: UIViewController {
         }
     }
     
+    var isCheckAnswer = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,8 +51,16 @@ class ViewController: UIViewController {
     
     @IBAction func rightButtonAction(_ sender: UIButton) {
         if let btn = startPosition {
-            let layer = drawLine(from: btn, to: sender)
-            deleteRedundantLine(startPosition: btn, endPosition: sender)
+            let marker = String(btn.tag)
+            
+            // check and delete Redundant Line
+            deleteRedundantLine(startPosition: btn)
+            let layer = drawLine(from: btn, to: sender, color: isCheckAnswer ? UIColor.blue : UIColor.gray)
+            
+            // add layer marker
+            layer.name?.append(marker)
+            
+            // save user answer
             self.answerLayerDict[btn.tag] = (sender.tag, layer)
             self.contentView.layer.addSublayer(layer)
             sender.setImage(UIImage(named: blueButtonLock), for: UIControl.State.normal)
@@ -72,6 +83,7 @@ class ViewController: UIViewController {
     
     @IBAction func seeAnswersActon(_ sender: UIButton) {
         reset()
+        isCheckAnswer = true
         for button in leftButtonCollection {
             startPosition = button
             let key = answerModel.rightAnswer[button.tag]
@@ -81,7 +93,7 @@ class ViewController: UIViewController {
     }
     
     /// draw line between picture and word
-    private func drawLine(from: UIButton, to: UIButton) -> CAShapeLayer {
+    private func drawLine(from: UIButton, to: UIButton, color: UIColor = .gray) -> CAShapeLayer {
         // find position in contentView
         guard let frameStart = from.superview?.convert(from.frame, to: contentView) else { return CAShapeLayer() }
         guard let frameFinish = to.superview?.convert(to.frame, to: contentView) else { return CAShapeLayer() }
@@ -93,36 +105,34 @@ class ViewController: UIViewController {
         //design path in layer
         let shapeLayer = CAShapeLayer()
         shapeLayer.path = line.cgPath
-        shapeLayer.strokeColor = UIColor.gray.cgColor
+        shapeLayer.strokeColor = color.cgColor
         shapeLayer.lineWidth = 5.0
-        shapeLayer.name = "one"
+        shapeLayer.name = castomLayer
         
         return shapeLayer
     }
     
     
-    /// try delete Redundant line
-    private func deleteRedundantLine(startPosition: UIButton, endPosition: UIButton) {
-        
-        let line = drawLine(from: startPosition, to: endPosition)
-        if let layer = contentView.layer.sublayers?.filter({$0.name == "one"}) {
-            print("delete")
-            for i in layer {
-                if i == line {
-                    i.removeFromSuperlayer()
-                }
-            }
+    ///  delete Redundant line
+    private func deleteRedundantLine(startPosition: UIButton) {
+        let marker = castomLayer + String(startPosition.tag)
+        if let layer = contentView.layer.sublayers?.filter({$0.name == marker }) {
+            layer.forEach({$0.removeFromSuperlayer()})
         }
     }
     
     /// remove all users line and answers
     private func reset() {
+        isCheckAnswer = false
         answerLayerDict.removeAll()
-        _ = contentView.layer.sublayers?.compactMap({$0.name == "one" ? $0.removeFromSuperlayer() : print("NO")})
+        if let layersOne = contentView.layer.sublayers?.filter({$0.name?.hasPrefix(castomLayer) != nil}) {
+            layersOne.forEach({$0.removeFromSuperlayer()})
+        }
         leftButtonCollection.forEach({$0.setImage(UIImage(named: orangeButtonStart), for: UIControl.State.normal)})
         rightButtonCollection.forEach({$0.setImage(UIImage(named: blueButtonLock), for: UIControl.State.normal)})
     }
     
+    /// check user answers
     private func check() {
         for result in answerLayerDict {
             answerLayerDict[result.key]?.1.strokeColor = answerModel.checkAnswer(answer: (result.key, result.value.0)) ? UIColor.green.cgColor : UIColor.red.cgColor
