@@ -372,6 +372,7 @@
                     </view>
                     <connections>
                         <outlet property="checkBtn" destination="crk-q3-Yax" id="b6Z-Tn-U4K"/>
+                        <outlet property="contentView" destination="Zv6-no-FrJ" id="rfR-IV-5bX"/>
                         <outlet property="resetBtn" destination="0ax-a7-p3L" id="qHF-vD-mIZ"/>
                         <outlet property="seeAnswersBtn" destination="skL-QC-obv" id="fym-jI-Uip"/>
                         <outlet property="tryBtn" destination="mxn-W0-Rbm" id="IC9-nV-Vuu"/>
