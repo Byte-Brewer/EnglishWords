@@ -54,14 +54,22 @@
 		7894F8B5223679DA0053E3EF /* EnglishWords */ = {
 			isa = PBXGroup;
 			children = (
-				7894F8B6223679DA0053E3EF /* AppDelegate.swift */,
 				7894F8B8223679DA0053E3EF /* ViewController.swift */,
 				7894F8BA223679DA0053E3EF /* Main.storyboard */,
+				7894F8C8223679F90053E3EF /* SupportingFiles */,
+			);
+			path = EnglishWords;
+			sourceTree = "<group>";
+		};
+		7894F8C8223679F90053E3EF /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				7894F8B6223679DA0053E3EF /* AppDelegate.swift */,
 				7894F8BD223679DB0053E3EF /* Assets.xcassets */,
 				7894F8BF223679DB0053E3EF /* LaunchScreen.storyboard */,
 				7894F8C2223679DB0053E3EF /* Info.plist */,
 			);
-			path = EnglishWords;
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -284,7 +292,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CSCETSS9EC;
-				INFOPLIST_FILE = EnglishWords/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/EnglishWords/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -302,7 +310,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CSCETSS9EC;
-				INFOPLIST_FILE = EnglishWords/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/EnglishWords/SupportingFiles/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
