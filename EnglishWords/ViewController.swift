@@ -129,7 +129,7 @@ class ViewController: UIViewController {
             layersOne.forEach({$0.removeFromSuperlayer()})
         }
         leftButtonCollection.forEach({$0.setImage(UIImage(named: orangeButtonStart), for: UIControl.State.normal)})
-        rightButtonCollection.forEach({$0.setImage(UIImage(named: blueButtonLock), for: UIControl.State.normal)})
+        rightButtonCollection.forEach({$0.setImage(UIImage(named: blueButtonSelect), for: UIControl.State.normal)})
     }
     
     /// check user answers
