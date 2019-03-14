@@ -12,12 +12,11 @@ let orangeButtonSelect = "orangeButtonSelect"
 let orangeButtonStart = "orangeButtonStart"
 let blueButtonLock = "blueButtonLock"
 let blueButtonSelect = "blueButtonSelect"
-
 let castomLayer = "one"
 
 class ViewController: UIViewController {
     
-    
+    // MARK: - Outlet
     @IBOutlet var leftButtonCollection: [UIButton]!
     @IBOutlet var rightButtonCollection: [UIButton]!
     @IBOutlet weak var resetBtn: UIButton!
@@ -26,24 +25,18 @@ class ViewController: UIViewController {
     @IBOutlet weak var seeAnswersBtn: UIButton!
     @IBOutlet weak var contentView: UIView!
     
+    // MARK: - properties
+    private let answerModel = AnswersModel()
+    private var answerLayerDict: [Int:(Int,CAShapeLayer)] = [:]
     
-    let answerModel = AnswersModel()
-    var answerLayerDict: [Int:(Int,CAShapeLayer)] = [:]
-    
-    var startPosition : UIButton? {
-        didSet {
-            
-        }
-    }
-    
-    var isCheckAnswer = false
+    private var startPosition : UIButton?
+    private var isCheckAnswer = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
-    
+    // MARK: - action
     @IBAction func leftButtonAction(_ sender: UIButton) {
         sender.setImage(UIImage(named: orangeButtonSelect), for: UIControl.State.normal)
         startPosition = sender
@@ -87,11 +80,14 @@ class ViewController: UIViewController {
         for button in leftButtonCollection {
             startPosition = button
             let key = answerModel.rightAnswer[button.tag]
-            let secondButton = rightButtonCollection.first(where: {$0.tag == key})
-            rightButtonAction(secondButton!)
+            if let secondButton = rightButtonCollection.first(where: {$0.tag == key}) {
+                rightButtonAction(secondButton)
+            }
         }
     }
     
+    
+    // MARK: - custom function
     /// draw line between picture and word
     private func drawLine(from: UIButton, to: UIButton, color: UIColor = .gray) -> CAShapeLayer {
         // find position in contentView
