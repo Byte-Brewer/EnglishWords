@@ -8,10 +8,6 @@
 
 import UIKit
 
-let orangeButtonSelect = "orangeButtonSelect"
-let orangeButtonStart = "orangeButtonStart"
-let blueButtonLock = "blueButtonLock"
-let blueButtonSelect = "blueButtonSelect"
 let castomLayer = "one"
 
 class ViewController: UIViewController {
@@ -38,7 +34,7 @@ class ViewController: UIViewController {
     
     // MARK: - action
     @IBAction func leftButtonAction(_ sender: UIButton) {
-        sender.setImage(UIImage(named: orangeButtonSelect), for: UIControl.State.normal)
+        sender.setImage(#imageLiteral(resourceName: "orangeButtonSelect"), for: UIControl.State.normal)
         startPosition = sender
     }
     
@@ -56,7 +52,7 @@ class ViewController: UIViewController {
             // save user answer
             self.answerLayerDict[btn.tag] = (sender.tag, layer)
             self.contentView.layer.addSublayer(layer)
-            sender.setImage(UIImage(named: blueButtonLock), for: UIControl.State.normal)
+            sender.setImage( #imageLiteral(resourceName: "blueButtonLock"), for: UIControl.State.normal)
             startPosition = nil
         }
     }
@@ -124,14 +120,14 @@ class ViewController: UIViewController {
         if let layersOne = contentView.layer.sublayers?.filter({$0.name?.hasPrefix(castomLayer) != nil}) {
             layersOne.forEach({$0.removeFromSuperlayer()})
         }
-        leftButtonCollection.forEach({$0.setImage(UIImage(named: orangeButtonStart), for: UIControl.State.normal)})
-        rightButtonCollection.forEach({$0.setImage(UIImage(named: blueButtonSelect), for: UIControl.State.normal)})
+        leftButtonCollection.forEach({$0.setImage(#imageLiteral(resourceName: "orangeButtonStart"), for: UIControl.State.normal)})
+        rightButtonCollection.forEach({$0.setImage(#imageLiteral(resourceName: "blueButtonSelect"), for: UIControl.State.normal)})
     }
     
     /// check user answers
     private func check() {
         for result in answerLayerDict {
-            answerLayerDict[result.key]?.1.strokeColor = answerModel.checkAnswer(answer: (result.key, result.value.0)) ? UIColor.green.cgColor : UIColor.red.cgColor
+            answerLayerDict[result.key]?.1.strokeColor = answerModel.checkAnswer(answer: (result.key, result.value.0)) ? #colorLiteral(red: 0.3411764801, green: 0.6235294342, blue: 0.1686274558, alpha: 1) : #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
         }
     }
 }
